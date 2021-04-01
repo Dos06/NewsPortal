@@ -1,6 +1,7 @@
 import React from 'react'
 import $ from 'jquery'
 import {NavDropdown} from "react-bootstrap"
+import {Link} from "react-router-dom";
 
 class Header extends React.Component{
 
@@ -46,7 +47,7 @@ class Header extends React.Component{
                         </div>
                         <ul className="navbar-nav d-flex align-items-center m-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="/">Home</a>
+                                <Link className="nav-link" to={'/'}>Home</Link>
                             </li>
                             <li className="nav-item dropdown">
                                 <NavDropdown title="Categories" id="basic-nav-dropdown">
@@ -56,21 +57,25 @@ class Header extends React.Component{
                                 </NavDropdown>
                             </li>
                             <li className="brand-box">
-                                <a href="/" className="logo"><span className="logo_D">D</span><span
+                                <Link to={'/'} className="logo"><span className="logo_D">D</span><span
                                     className="logo_and">&</span><span
-                                    className="logo_R">B</span></a>
+                                    className="logo_R">B</span></Link>
                             </li>
                             <li className="nav-item dropdown">
                                 <NavDropdown title="Our Team" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#">Dosbol Bakhtiyar</NavDropdown.Item>
-                                    <NavDropdown.Item href="#">Dosbol Bakhtiyar</NavDropdown.Item>
-                                    <NavDropdown.Item href="#">Dosbol Bakhtiyar</NavDropdown.Item>
+                                    <NavDropdown.Item href="#">Lorem ipsum</NavDropdown.Item>
+                                    <NavDropdown.Item href="#">Lorem ipsum</NavDropdown.Item>
+                                    <NavDropdown.Item href="#">Lorem ipsum</NavDropdown.Item>
                                 </NavDropdown>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavDropdown title="Language" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#">English</NavDropdown.Item>
-                                    <NavDropdown.Item href="#">Русский</NavDropdown.Item>
+                                <NavDropdown title="Authorize" id="basic-nav-dropdown">
+                                    <NavDropdown.Item>
+                                        <Link to={'/login'}>Login</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link to={'/register'}>Registration</Link>
+                                    </NavDropdown.Item>
                                 </NavDropdown>
                             </li>
                         </ul>
