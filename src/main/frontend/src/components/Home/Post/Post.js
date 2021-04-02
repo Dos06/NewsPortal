@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 const Post = () => {
     return (
         <div className="col-lg-4 col-12 col-md-6 p-1 p-md-3">
@@ -9,11 +11,11 @@ const Post = () => {
                         <span className="home_post_card_cat_name">Game-Dev</span>
                         <span className="home_post_card_cat_name">Web</span>
                         <p>
-                            <a href="#" className="home_post_card_title">
+                            <Link to={"/project/1"} className="home_post_card_title">
                                 Lorem ipsum dolor sit amet, consectetur adipisicing.
-                            </a>
+                            </Link>
                             <span className="home_post_card_author">
-                                by <span><a href="#">Dos</a></span>
+                                by <span><Link to={"/programmer/1"}>Dos</Link></span>
                             </span>
                         </p>
                     </div>

@@ -33,7 +33,7 @@ class Header extends React.Component{
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                            onClick="test()">
+                            onClick={() => {}}>
                         <i className="fas fa-bars"/>
                     </button>
 
@@ -63,9 +63,15 @@ class Header extends React.Component{
                             </li>
                             <li className="nav-item dropdown">
                                 <NavDropdown title="Our Team" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#">Lorem ipsum</NavDropdown.Item>
-                                    <NavDropdown.Item href="#">Lorem ipsum</NavDropdown.Item>
-                                    <NavDropdown.Item href="#">Lorem ipsum</NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link to={'/programmer/1'}>Lorem ipsum</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link to={'/programmer/2'}>Lorem ipsum</Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link to={'/programmer/3'}>Lorem ipsum</Link>
+                                    </NavDropdown.Item>
                                 </NavDropdown>
                             </li>
                             <li className="nav-item dropdown">
