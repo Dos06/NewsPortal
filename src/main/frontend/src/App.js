@@ -2,6 +2,7 @@ import './css/fontawesome/css/all.css'
 import './css/bootstrap.min.css'
 import './css/style.css'
 import './css/rate-style.css'
+import './css/admin.css'
 import {Route, Switch} from 'react-router-dom';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
