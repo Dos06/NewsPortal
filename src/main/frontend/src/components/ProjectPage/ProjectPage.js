@@ -20,19 +20,19 @@ export default function ProjectPage() {
                     <h1>Lorem ipsum dolor sit amet, consectetur.</h1>
                     <span className="home_post_card_pubdate mr-2">31 March 2021</span>
 
-                    <form id="likeForm1" action="#" method="get" hidden>
+                    {/*<form id="likeForm1" action="#" method="get" hidden>*/}
 
-                    </form>
+                    {/*</form>*/}
 
-                    <a className="btnModifyLike" type="button" onClick={() => {
-                        /* add like */
-                    }}>
-                        <i className="fa fa-heart ml-1" id="likeIcon1"/> <span id="likeCount1"> 11</span>
-                    </a>
+                    {/*<a className="btnModifyLike" type="button" onClick={() => {*/}
+                    {/*   */}
+                    {/*}}>*/}
+                    {/*    <i className="fa fa-heart ml-1" id="likeIcon1"/> <span id="likeCount1"> 11</span>*/}
+                    {/*</a>*/}
 
-                    <span className="text-nowrap m-2">
-                        <i className="far fa-eye ml-1"/> 45
-                    </span>
+                    {/*<span className="text-nowrap m-2">*/}
+                    {/*    <i className="far fa-eye ml-1"/> 45*/}
+                    {/*</span>*/}
 
                     <div className="mt-3 mb-3">
                         <div>
@@ -70,9 +70,9 @@ export default function ProjectPage() {
                         31 March 2021
                     </span>
 
-                    <span className="text-nowrap m-2">
-                        <i className="far fa-eye ml-1"/> 45
-                    </span>
+                    {/*<span className="text-nowrap m-2">*/}
+                    {/*    <i className="far fa-eye ml-1"/> 45*/}
+                    {/*</span>*/}
 
                     <div className="mt-5">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aut debitis distinctio et
