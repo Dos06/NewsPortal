@@ -1,4 +1,33 @@
+import {Form} from "react-bootstrap";
+import {useState} from "react";
+import {useHistory} from "react-router-dom";
+import DbService from "../../../_services/DbService";
+
 const Login = () => {
+    const history = useHistory()
+    if (DbService.getCurrentToken()) {
+        history.push('/')
+    }
+
+    const [login, setLogin] = useState("");
+    const [password, setPassword] = useState("");
+    const onChangeLogin = event => {
+        setLogin(event.target.value);
+    }
+    const onChangePassword = event => {
+        setPassword(event.target.value);
+    }
+    const onSubmitForm = event => {
+        event.preventDefault()
+        DbService.login(login, password)
+            .then(r => {
+                if (r) {
+                    history.push('/')
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
     return (
         <div className="container">
             <div className="row">
@@ -14,19 +43,19 @@ const Login = () => {
                             <div>
                                 You have been logged out.
                             </div>
-                            <form action="#" method="post">
+                            <Form onSubmit={onSubmitForm}>
                                 <div className="form-group">
                                     <label htmlFor="login">Enter login: </label>
-                                    <input type="text" name="username" className="form-control" id="login"/>
+                                    <input type="text" name="username" value={login} onChange={onChangeLogin} className="form-control" id="login" required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="password"> Password: </label>
-                                    <input type="password" name="password" className="form-control" id="password"/>
+                                    <input type="password" name="password" value={password} onChange={onChangePassword} className="form-control" id="password" required/>
                                 </div>
                                 <div className="form-group">
                                     <button type="submit" className="btn btn-warning">Sign In</button>
                                 </div>
-                            </form>
+                            </Form>
                         </div>
                     </div>
                 </div>

@@ -43,8 +43,9 @@ public class JwtAuthController {
 
     @RequestMapping(value = "/auth")
     public ResponseEntity<?> auth(@RequestBody JwtRequest request) throws Exception {
-        authenticate(request.getEmail(), request.getPassword());
-        final UserDetails userDetails = userService.loadUserByUsername(request.getEmail());
+        System.out.println(request);
+        authenticate(request.getUsername(), request.getPassword());
+        final UserDetails userDetails = userService.loadUserByUsername(request.getUsername());
         final String token = jwtTokenGenerator.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtResponse(token));
@@ -60,15 +61,22 @@ public class JwtAuthController {
         }
     }
 
+
     @PostMapping(value = "/auth/register")
     @PreAuthorize("isAnonymous()")
-    public ResponseEntity<?> signUp(@RequestBody Users newUser) {
+    public ResponseEntity<?> signUp(@RequestBody JwtRequest newUser) {
+        System.out.println(newUser.getUsername());
+        System.out.println(newUser);
         Users user = userService.getUserByUsername(newUser.getUsername());
         if (user == null) {
             List<Role> roles = new ArrayList<>(1);
             roles.add(roleService.getOneByName("USER"));
-            newUser.setRoles(roles);
-            userService.saveUser(newUser);
+
+            user = new Users();
+            user.setUsername(newUser.getUsername());
+            user.setPassword(newUser.getPassword());
+            user.setRoles(roles);
+            userService.saveUser(user);
         }
         return ResponseEntity.ok(newUser);
     }

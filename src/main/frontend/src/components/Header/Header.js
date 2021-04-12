@@ -2,6 +2,32 @@ import React from 'react'
 import $ from 'jquery'
 import {NavDropdown} from "react-bootstrap"
 import {Link} from "react-router-dom";
+import DbService from "../../_services/DbService";
+
+const NavItems = () => {
+    const logout = () => {
+        DbService.logout()
+    }
+
+    const token = DbService.getCurrentToken()
+    return (
+        token ?
+            <>
+                <NavDropdown.Item>
+                    <Link to={'/login'} onClick={logout}>Log Out</Link>
+                </NavDropdown.Item>
+            </>
+            :
+            <>
+                <NavDropdown.Item>
+                    <Link to={'/login'}>Login</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                    <Link to={'/register'}>Registration</Link>
+                </NavDropdown.Item>
+            </>
+    )
+}
 
 class Header extends React.Component{
 
@@ -76,12 +102,7 @@ class Header extends React.Component{
                             </li>
                             <li className="nav-item dropdown">
                                 <NavDropdown title="Authorize" id="basic-nav-dropdown">
-                                    <NavDropdown.Item>
-                                        <Link to={'/login'}>Login</Link>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item>
-                                        <Link to={'/register'}>Registration</Link>
-                                    </NavDropdown.Item>
+                                    <NavItems/>
                                 </NavDropdown>
                             </li>
                         </ul>
