@@ -1,5 +1,6 @@
 package spring.newsportal.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import spring.newsportal.entities.models.Role;
 import spring.newsportal.entities.models.Users;
 import spring.newsportal.repositories.RoleRepository;
@@ -16,24 +17,19 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Users user = userRepository.findByUsername(username);
-
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-
         return user;
     }
 

@@ -35,8 +35,8 @@ public class ProgrammerServiceImpl implements ProgrammerService {
     @Autowired
     private SkillService skillService;
 
-    @Value("${file.avatar.uploadPath}")
-    private String uploadPathAvatars;
+//    @Value("${file.avatar.uploadPath}")
+//    private String uploadPathAvatars;
 
     @Override
 //    public void uploadAvatarFromController(Long programmerId, MultipartFile user_avatar) {
