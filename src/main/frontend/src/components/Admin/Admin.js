@@ -11,6 +11,7 @@ import SkillTable from "./Tables/SkillTable";
 import ProgrammerTable from "./Tables/ProgrammerTable";
 import StatusTable from "./Tables/StatusTable";
 import ProjectTable from "./Tables/ProjectTable";
+import DataTable from "react-data-table-component";
 
 const paginationOptions = {
     rowsPerPageText: 'Rows per page',
@@ -41,14 +42,22 @@ class Admin extends React.Component {
                 <div className="main-body-content w-100 ets-pt">
                     <div className="table-responsive bg-light">
                         <Switch>
-                            <Route path={'/admin/users'} render={() => <UserTable paginationOptions={paginationOptions}/>}/>
-                            <Route path={'/admin/categories'} render={() => <CategoryTable paginationOptions={paginationOptions}/>}/>
-                            <Route path={'/admin/programmers'} render={() => <ProgrammerTable paginationOptions={paginationOptions}/>}/>
-                            <Route path={'/admin/projects'} render={() => <ProjectTable paginationOptions={paginationOptions}/>}/>
-                            <Route path={'/admin/roles'} render={() => <RoleTable paginationOptions={paginationOptions}/>}/>
-                            <Route path={'/admin/skills'} render={() => <SkillTable paginationOptions={paginationOptions}/>}/>
-                            <Route path={'/admin/statuses'} render={() => <StatusTable paginationOptions={paginationOptions}/>}/>
-                            <Route path={'/admin/technologies'} render={() => <TechnologyTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/users'}
+                                   render={() => <UserTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/categories'}
+                                   render={() => <CategoryTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/programmers'}
+                                   render={() => <ProgrammerTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/projects'}
+                                   render={() => <ProjectTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/roles'}
+                                   render={() => <RoleTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/skills'}
+                                   render={() => <SkillTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/statuses'}
+                                   render={() => <StatusTable paginationOptions={paginationOptions}/>}/>
+                            <Route path={'/admin/technologies'}
+                                   render={() => <TechnologyTable paginationOptions={paginationOptions}/>}/>
                         </Switch>
                     </div>
                 </div>

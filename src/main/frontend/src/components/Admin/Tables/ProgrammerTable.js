@@ -1,4 +1,6 @@
 import DataTable from "react-data-table-component";
+import React from "react";
+import {Button} from "react-bootstrap";
 
 const columns = [
     {
@@ -46,12 +48,15 @@ const data = [
 
 export default function ProgrammerTable(props) {
     return (
-        <DataTable
-            columns={columns}
-            data={data}
-            title={'Programmers'}
-            pagination
-            paginationComponentOptions={props.paginationOptions}
-        />
+        <>
+            <Button variant={'dark'} size={'lg'} className="mx-3 my-2">ADD</Button>
+            <DataTable
+                columns={columns}
+                data={data}
+                title={'Programmers'}
+                pagination
+                paginationComponentOptions={props.paginationOptions}
+            />
+        </>
     )
 }

@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const auth = 'http://localhost:8080/auth';
+export const api = 'http://localhost:8080/';
+export const auth = 'http://localhost:8080/auth';
+export const TABLE_USERS = 'users';
+export const TABLE_CATEGORIES = 'categories';
 
 class DbService {
     async login(username, password) {
@@ -25,6 +28,9 @@ class DbService {
         return JSON.parse(localStorage.getItem('token'))
     }
 
+    async getAllByTable(table) {
+        return axios.get(api + table)
+    }
 }
 
 export default new DbService()

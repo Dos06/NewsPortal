@@ -1,5 +1,6 @@
 package spring.newsportal.entities.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import spring.newsportal.entities.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +15,14 @@ public class Users extends BaseEntity implements UserDetails {
     @Column
     private String username;
 
+    @JsonIgnore
     @Column
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "programmer_id", referencedColumnName = "id", nullable = true)
     private ProgrammerEntity programmer;

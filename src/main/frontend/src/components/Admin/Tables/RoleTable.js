@@ -1,4 +1,6 @@
 import DataTable from "react-data-table-component";
+import React from "react";
+import {Button} from "react-bootstrap";
 
 const columns = [
     {
@@ -37,12 +39,15 @@ const paginationOptions = {
 
 export default function RoleTable() {
     return (
-        <DataTable
-            columns={columns}
-            data={data}
-            title={'Roles'}
-            pagination
-            paginationComponentOptions={paginationOptions}
-        />
+        <>
+            <Button variant={'dark'} size={'lg'} className="mx-3 my-2">ADD</Button>
+            <DataTable
+                columns={columns}
+                data={data}
+                title={'Roles'}
+                pagination
+                paginationComponentOptions={paginationOptions}
+            />
+        </>
     )
 }

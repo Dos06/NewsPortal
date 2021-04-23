@@ -1,7 +1,7 @@
 import SideTopPosts from "./SideTopPosts/SideTopPosts";
 import Authors from "./Authors/Authors";
 import Technologies from "./Technologies/Technologies";
-import Categories from "./Categories/Technologies";
+import Categories from "./Categories/Categories";
 
 export default function ProjectPage() {
     return (
@@ -17,7 +17,7 @@ export default function ProjectPage() {
                          }}>
                     </div>
 
-                    <h1>Lorem ipsum dolor sit amet, consectetur.</h1>
+                    <h1 className={'mt-5'}>Lorem ipsum dolor sit amet, consectetur.</h1>
                     <span className="home_post_card_pubdate mr-2">31 March 2021</span>
 
                     {/*<form id="likeForm1" action="#" method="get" hidden>*/}

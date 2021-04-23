@@ -1,4 +1,6 @@
 import DataTable from "react-data-table-component";
+import React, {useEffect, useState} from "react";
+import DbService, {TABLE_USERS} from "../../../_services/DbService";
 
 const columns = [
     {
@@ -18,25 +20,25 @@ const columns = [
     },
 ]
 
-const data = [
-    {
-        id: 1,
-        username: 'Dos',
-        roles: ['Admin, ', 'Moderator, ', 'User']
-    },
-    {
-        id: 2,
-        username: 'John',
-        roles: ['Moderator, ', 'User']
-    },
-    {
-        id: 3,
-        username: 'Doe',
-        roles: ['User']
-    },
-]
-
 export default function UserTable(props) {
+    const [data, setData] = useState([]);
+
+    const loadData = () => {
+        DbService.getAllByTable(TABLE_USERS).then(response => {
+            setData((response.data).map(item => {
+                return {
+                    id: item.id,
+                    username: item.username,
+                    roles: (item.roles).map(i => i.authority + ' ')
+                }
+            }))
+        })
+    }
+
+    useEffect(() => {
+        loadData()
+    }, [])
+
     return (
         <DataTable
             columns={columns}
@@ -45,45 +47,5 @@ export default function UserTable(props) {
             pagination
             paginationComponentOptions={props.paginationOptions}
         />
-
-
-        // <table className="table" id="table">
-        //     <thead>
-        //     <tr>
-        //         <th>ID</th>
-        //         <th>Username</th>
-        //         <th>Roles</th>
-        //     </tr>
-        //     </thead>
-        //     <tbody>
-        //     <tr>
-        //         <td>1</td>
-        //         <td>Dos</td>
-        //         <td>
-        //             <span className="d-block">Admin</span>
-        //             <span className="d-block">Moderator</span>
-        //             <span className="d-block">User</span>
-        //         </td>
-        //     </tr>
-        //     <tr>
-        //         <td>1</td>
-        //         <td>Dos</td>
-        //         <td>
-        //             <span className="d-block">Admin</span>
-        //             <span className="d-block">Moderator</span>
-        //             <span className="d-block">User</span>
-        //         </td>
-        //     </tr>
-        //     <tr>
-        //         <td>1</td>
-        //         <td>Dos</td>
-        //         <td>
-        //             <span className="d-block">Admin</span>
-        //             <span className="d-block">Moderator</span>
-        //             <span className="d-block">User</span>
-        //         </td>
-        //     </tr>
-        //     </tbody>
-        // </table>
     )
 }
