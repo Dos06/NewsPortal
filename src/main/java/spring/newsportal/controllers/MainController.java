@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import spring.newsportal.entities.models.CategoryEntity;
+import spring.newsportal.entities.models.ProjectEntity;
 import spring.newsportal.entities.models.Users;
 import spring.newsportal.services.CategoryService;
+import spring.newsportal.services.ProjectService;
 import spring.newsportal.services.UserService;
 
 import java.util.List;
@@ -21,6 +23,8 @@ public class MainController {
     private UserService userService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ProjectService projectService;
 
     @GetMapping(value = "/users")
     public ResponseEntity<?> getUsers() {
@@ -32,5 +36,11 @@ public class MainController {
     public ResponseEntity<?> getCategories() {
         List<CategoryEntity> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(Objects.requireNonNullElse(categories, HttpEntity.EMPTY));
+    }
+
+    @GetMapping(value = "/projects")
+    public ResponseEntity<?> getProjects() {
+        List<ProjectEntity> projects = projectService.getAllProjects();
+        return ResponseEntity.ok(Objects.requireNonNullElse(projects, HttpEntity.EMPTY));
     }
 }

@@ -8,6 +8,7 @@ export const EDIT = 'edit';
 
 export const TABLE_USERS = 'users';
 export const TABLE_CATEGORIES = 'categories';
+export const TABLE_PROJECTS = 'projects';
 
 class DbService {
     async login(username, password) {
@@ -42,7 +43,7 @@ class DbService {
             return axios.post(`${API}${token}/${ADD}/${table}`, item)
         }
         if (action === DELETE) {
-            return axios.delete(`${API}${token}/${DELETE}/${table}`, item)
+            return axios.delete(`${API}${token}/${DELETE}/${table}`, {data: item})
         }
         if (action === EDIT) {
             return axios.put(`${API}${token}/${EDIT}/${table}`, item)

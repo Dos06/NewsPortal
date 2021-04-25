@@ -1,22 +1,34 @@
 import DataTable from "react-data-table-component";
 import React, {useEffect, useState} from "react";
 import {Button, Form, Modal} from "react-bootstrap";
-import DbService, {ADD, TABLE_CATEGORIES} from "../../../_services/DbService";
-
-const columns = [
-    {
-        name: 'ID',
-        selector: 'id',
-        sortable: true,
-    },
-    {
-        name: 'Name',
-        selector: 'name',
-        sortable: true,
-    }
-]
+import DbService, {ADD, DELETE, TABLE_CATEGORIES} from "../../../_services/DbService";
 
 export default function CategoryTable(props) {
+    const columns = [
+        {
+            name: 'ID',
+            selector: 'id',
+            sortable: true,
+        },
+        {
+            name: 'Name',
+            selector: 'name',
+            sortable: true,
+        },
+        {
+            cell: (row) => <Button variant={'danger'} onClick={() => {
+                deleteItem(row.id)
+                    .then(_ => loadData())
+            }}>DELETE</Button>
+        }
+    ]
+
+    async function deleteItem(id) {
+        DbService.changeItem(DELETE, TABLE_CATEGORIES, id)
+            .then(_ => loadData())
+            .catch(e => console.log(e))
+    }
+
     const [show, setShow] = useState(false);
     const [name, setName] = useState('');
 
