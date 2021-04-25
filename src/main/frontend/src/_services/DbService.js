@@ -1,13 +1,17 @@
 import axios from "axios";
 
-export const api = 'http://localhost:8080/';
-export const auth = 'http://localhost:8080/auth';
+const API = 'http://localhost:8080/';
+
+export const ADD = 'add';
+export const DELETE = 'delete';
+export const EDIT = 'edit';
+
 export const TABLE_USERS = 'users';
 export const TABLE_CATEGORIES = 'categories';
 
 class DbService {
     async login(username, password) {
-        return axios.post(auth, {username, password}).then(response => {
+        return axios.post(API + 'auth', {username, password}).then(response => {
             let token = response.data
             if (token) {
                 localStorage.setItem('token', JSON.stringify(token))
@@ -21,7 +25,7 @@ class DbService {
     }
 
     async register(username, password) {
-        return axios.post(auth + '/register', {username, password})
+        return axios.post(API + 'auth/register', {username, password})
     }
 
     getCurrentToken() {
@@ -29,7 +33,20 @@ class DbService {
     }
 
     async getAllByTable(table) {
-        return axios.get(api + table)
+        return axios.get(API + table)
+    }
+
+    async changeItem(action, table, item) {
+        let token = JSON.parse(localStorage.getItem('token'))['jwtToken']
+        if (action === ADD) {
+            return axios.post(`${API}${token}/${ADD}/${table}`, item)
+        }
+        if (action === DELETE) {
+            return axios.delete(`${API}${token}/${DELETE}/${table}`, item)
+        }
+        if (action === EDIT) {
+            return axios.put(`${API}${token}/${EDIT}/${table}`, item)
+        }
     }
 }
 

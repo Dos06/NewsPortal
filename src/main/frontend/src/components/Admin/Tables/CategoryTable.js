@@ -1,7 +1,7 @@
 import DataTable from "react-data-table-component";
 import React, {useEffect, useState} from "react";
 import {Button, Form, Modal} from "react-bootstrap";
-import DbService, {TABLE_CATEGORIES} from "../../../_services/DbService";
+import DbService, {ADD, TABLE_CATEGORIES} from "../../../_services/DbService";
 
 const columns = [
     {
@@ -18,6 +18,7 @@ const columns = [
 
 export default function CategoryTable(props) {
     const [show, setShow] = useState(false);
+    const [name, setName] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -39,6 +40,24 @@ export default function CategoryTable(props) {
         loadData()
     }, [])
 
+    const onChangeName = event => {
+        setName(event.target.value);
+    }
+    const onSubmitForm = event => {
+        addItem(name)
+            .then(_ => {
+                setName('')
+            })
+            .catch(e => console.log(e))
+        event.preventDefault()
+    }
+
+    async function addItem(data) {
+        DbService.changeItem(ADD, TABLE_CATEGORIES, data)
+            .then(_ => loadData())
+            .catch(e => console.log(e))
+    }
+
     return (
         <>
             <Button variant={'dark'} size={'lg'} className="mx-3 my-2" onClick={handleShow}>ADD</Button>
@@ -50,26 +69,32 @@ export default function CategoryTable(props) {
                 paginationComponentOptions={props.paginationOptions}
             />
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add to {TABLE_CATEGORIES}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
+            <Modal show={show} animation={false} onHide={handleClose}>
+                <Form onSubmit={onSubmitForm}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add to {TABLE_CATEGORIES}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Category name:</Form.Label>
-                            <Form.Control type="text" placeholder="Enter name" required/>
+                            <Form.Control
+                                value={name}
+                                onChange={onChangeName}
+                                type="text"
+                                placeholder="Enter name"
+                                required
+                            />
                         </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        CLOSE
-                    </Button>
-                    <Button variant="dark" onClick={handleClose}>
-                        SAVE
-                    </Button>
-                </Modal.Footer>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            CLOSE
+                        </Button>
+                        <Button variant="dark" type={'submit'}>
+                            SAVE
+                        </Button>
+                    </Modal.Footer>
+                </Form>
             </Modal>
         </>
     )
