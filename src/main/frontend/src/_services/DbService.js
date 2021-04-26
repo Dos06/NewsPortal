@@ -9,6 +9,7 @@ export const EDIT = 'edit';
 export const TABLE_USERS = 'users';
 export const TABLE_CATEGORIES = 'categories';
 export const TABLE_PROJECTS = 'projects';
+export const TABLE_PROGRAMMERS = 'programmers';
 
 class DbService {
     async login(username, password) {

@@ -11,7 +11,7 @@ export default function Categories(props) {
                     <ul className="list-unstyled mb-0 d-flex flex-wrap">
                         {!categories ? '' : categories.map(c => {
                             return (
-                                <li className={'col-lg-6'}>
+                                <li key={`c${c.id}`} className={'col-lg-6'}>
                                     <Link to={'/'}>{c.category}</Link>
                                 </li>
                             )

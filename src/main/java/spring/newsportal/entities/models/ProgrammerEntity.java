@@ -17,10 +17,10 @@ public class ProgrammerEntity extends BaseEntity {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "profile_img", length = 2048)
+    @Column(name = "profile_img", columnDefinition = "TEXT")
     private String profile_img;
 
     @OneToMany(targetEntity = ContactInfoEntity.class, mappedBy = "programmer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -108,10 +108,10 @@ public class ProgrammerEntity extends BaseEntity {
         this.profile_img = profile_img;
     }
 
-    @Transient
-    public String getProfileImgPath() {
-        if (profile_img == null)
-            return "/avatars/default.jpg";
-        return "/avatars/" + this.getId() + "/" + profile_img;
-    }
+//    @Transient
+//    public String getProfileImgPath() {
+//        if (profile_img == null)
+//            return "/avatars/default.jpg";
+//        return "/avatars/" + this.getId() + "/" + profile_img;
+//    }
 }

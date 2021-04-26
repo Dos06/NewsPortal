@@ -6,11 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.newsportal.config.Consts;
 import spring.newsportal.config.jwt.JwtTokenGenerator;
+import spring.newsportal.controllers.requests.ProgrammerRequest;
 import spring.newsportal.controllers.requests.ProjectRequest;
 import spring.newsportal.entities.models.CategoryEntity;
+import spring.newsportal.entities.models.ProgrammerEntity;
 import spring.newsportal.entities.models.ProjectEntity;
 import spring.newsportal.entities.models.Users;
 import spring.newsportal.services.CategoryService;
+import spring.newsportal.services.ProgrammerService;
 import spring.newsportal.services.ProjectService;
 import spring.newsportal.services.UserService;
 
@@ -29,6 +32,8 @@ public class CrudController {
     private CategoryService categoryService;
     @Autowired
     private ProjectService projectService;
+    @Autowired
+    private ProgrammerService programmerService;
 
     @PostMapping(value = "/{token}/" + Consts.ADD + "/" + Consts.TABLE_CATEGORIES)
     public ResponseEntity<?> addCategory(@PathVariable String token, @RequestBody String name) {
@@ -76,6 +81,32 @@ public class CrudController {
         if (project.isPresent()) {
             ProjectEntity proj = project.get();
             projectService.delete(proj);
+        }
+        return ResponseEntity.ok(HttpEntity.EMPTY);
+    }
+
+    @PostMapping(value = "/{token}/" + Consts.ADD + "/" + Consts.TABLE_PROGRAMMERS)
+    public ResponseEntity<?> addProgrammer(@PathVariable String token, @RequestBody ProgrammerRequest request) {
+        String login = jwtTokenGenerator.getEmailFromToken(token);
+        Users user = userService.getUserByUsername(login);
+
+        ProgrammerEntity programmer = new ProgrammerEntity();
+        programmer.setName(request.getName());
+        programmer.setLast_name(request.getLastName());
+        programmer.setEmail(request.getEmail());
+        programmer.setDescription(request.getDescription());
+        programmer.setProfile_img(request.getImg());
+
+        return ResponseEntity.ok(programmerService.add(programmer));
+    }
+    @DeleteMapping(value = "/{token}/" + Consts.DELETE + "/" + Consts.TABLE_PROGRAMMERS)
+    public ResponseEntity<?> deleteProgrammer(@PathVariable String token, @RequestBody String id) {
+        String login = jwtTokenGenerator.getEmailFromToken(token);
+        Users user = userService.getUserByUsername(login);
+
+        ProgrammerEntity programmer = programmerService.getProgrammerById(Long.parseLong(id));
+        if (programmer != null) {
+            programmerService.delete(programmer);
         }
         return ResponseEntity.ok(HttpEntity.EMPTY);
     }

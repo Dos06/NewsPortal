@@ -2,7 +2,7 @@ import React from 'react'
 import $ from 'jquery'
 import {NavDropdown} from "react-bootstrap"
 import {Link} from "react-router-dom";
-import DbService, {TABLE_CATEGORIES} from "../../_services/DbService";
+import DbService, {TABLE_CATEGORIES, TABLE_PROGRAMMERS} from "../../_services/DbService";
 
 const NavItems = () => {
     const logout = () => {
@@ -32,7 +32,10 @@ const NavItems = () => {
 class Header extends React.Component {
     constructor(props) {
         super(props)
-        this.categories = DbService.getAllByTable(TABLE_CATEGORIES)
+        this.state = {
+            categories: [],
+            programmers: []
+        }
     }
 
     componentDidMount() {
@@ -53,6 +56,15 @@ class Header extends React.Component {
             $('.search-box').find('input').removeAttr('style');
             $('.search-box').find('button[type="submit"]').removeAttr('style');
         });
+
+        DbService.getAllByTable(TABLE_CATEGORIES)
+            .then(r => {
+                this.setState({categories: r.data})
+            })
+        DbService.getAllByTable(TABLE_PROGRAMMERS)
+            .then(r => {
+                this.setState({programmers: r.data})
+            })
     }
 
     render() {
@@ -63,7 +75,8 @@ class Header extends React.Component {
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                            onClick={() => {}}>
+                            onClick={() => {
+                            }}>
                         <i className="fas fa-bars"/>
                     </button>
 
@@ -81,19 +94,16 @@ class Header extends React.Component {
                             </li>
                             <li className="nav-item dropdown">
                                 <NavDropdown title="Categories" id="basic-nav-dropdown">
-                                    {/*{*/}
-                                    {/*    this.categories ?*/}
-                                    {/*        (this.categories).map(c => {*/}
-                                    {/*            return (*/}
-                                    {/*                <NavDropdown.Item href="#">{c.category}</NavDropdown.Item>*/}
-                                    {/*            )*/}
-                                    {/*        })*/}
-                                    {/*        :*/}
-                                    {/*        ''*/}
-                                    {/*}*/}
-                                    <NavDropdown.Item href="#">Mobile Dev</NavDropdown.Item>
-                                    <NavDropdown.Item href="#">Backend</NavDropdown.Item>
-                                    <NavDropdown.Item href="#">Frontend</NavDropdown.Item>
+                                    {
+                                        this.state.categories ?
+                                            (this.state.categories).map(c => {
+                                                return (
+                                                    <NavDropdown.Item key={`cat${c.id}`} href="#">{c.category}</NavDropdown.Item>
+                                                )
+                                            })
+                                            :
+                                            ''
+                                    }
                                 </NavDropdown>
                             </li>
                             <li className="brand-box">
@@ -103,15 +113,19 @@ class Header extends React.Component {
                             </li>
                             <li className="nav-item dropdown">
                                 <NavDropdown title="Our Team" id="basic-nav-dropdown">
-                                    <NavDropdown.Item>
-                                        <Link to={'/programmer/1'}>Lorem ipsum</Link>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item>
-                                        <Link to={'/programmer/2'}>Lorem ipsum</Link>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item>
-                                        <Link to={'/programmer/3'}>Lorem ipsum</Link>
-                                    </NavDropdown.Item>
+                                    {
+                                        this.state.programmers ?
+                                            (this.state.programmers).map(p => {
+                                                return (
+                                                    <NavDropdown.Item>
+                                                        <Link key={`prog${p.id}`}
+                                                              to={`/programmer/${p.id}`}>{p.name + ' ' + p.last_name}</Link>
+                                                    </NavDropdown.Item>
+                                                )
+                                            })
+                                            :
+                                            ''
+                                    }
                                 </NavDropdown>
                             </li>
                             <li className="nav-item dropdown">
