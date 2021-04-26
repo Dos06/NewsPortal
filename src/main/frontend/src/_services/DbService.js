@@ -37,6 +37,10 @@ class DbService {
         return axios.get(API + table)
     }
 
+    async getItemByIdAndTable(id, table) {
+        return axios.get(API + table + '/' + id)
+    }
+
     async changeItem(action, table, item) {
         let token = JSON.parse(localStorage.getItem('token'))['jwtToken']
         if (action === ADD) {

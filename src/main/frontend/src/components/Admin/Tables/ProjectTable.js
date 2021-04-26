@@ -1,28 +1,45 @@
 import DataTable from "react-data-table-component";
 import {Button, Form, Modal} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
-import DbService, {ADD, TABLE_CATEGORIES, TABLE_PROJECTS} from "../../../_services/DbService";
-
-const columns = [
-    {
-        name: 'ID',
-        selector: 'id',
-        sortable: true,
-    },
-    {
-        name: 'Title',
-        selector: 'title',
-        sortable: true,
-    }
-]
+import DbService, {ADD, DELETE, TABLE_CATEGORIES, TABLE_PROJECTS} from "../../../_services/DbService";
 
 export default function ProjectTable(props) {
+    const columns = [
+        {
+            name: 'ID',
+            selector: 'id',
+            sortable: true,
+        },
+        {
+            name: 'Title',
+            selector: 'title',
+            sortable: true,
+        },
+        {
+            right: true,
+            cell: (row) => <>
+                <Button variant={'dark'} className={'mr-2'} onClick={() => {
+                    // editItem(row.id)
+                }}>EDIT</Button>
+                <Button variant={'danger'} onClick={() => {
+                    deleteItem(row.id)
+                }}>DELETE</Button>
+            </>
+        }
+    ]
+
+    async function deleteItem(id) {
+        DbService.changeItem(DELETE, TABLE_PROJECTS, id)
+            .then(_ => loadData())
+            .catch(e => console.log(e))
+    }
+
     const [show, setShow] = useState(false);
     const [title, setTitle] = useState('');
     const [img, setImg] = useState('');
     const [shortDesc, setShortDesc] = useState('');
     const [body, setBody] = useState('');
-    const [categoryId, setCategoryId] = useState('');
+    const [categoryId, setCategoryId] = useState(0);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -69,13 +86,14 @@ export default function ProjectTable(props) {
         setBody(event.target.value);
     }
     const onSubmitForm = event => {
-        const data = {title, img, shortDesc, body}
+        const data = {title, img, shortDesc, body, categoryId}
         addItem(data)
             .then(_ => {
                 setTitle('')
                 setImg('')
                 setShortDesc('')
                 setBody('')
+                setCategoryId(0)
             })
             .catch(e => console.log(e))
         event.preventDefault()
@@ -105,7 +123,7 @@ export default function ProjectTable(props) {
                     </Modal.Header>
                     <Modal.Body>
                         <Form.Group>
-                            <Form.Label>Category name:</Form.Label>
+                            <Form.Label>Title:</Form.Label>
                             <Form.Control
                                 value={title}
                                 onChange={onChangeTitle}

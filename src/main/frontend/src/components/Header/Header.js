@@ -2,7 +2,7 @@ import React from 'react'
 import $ from 'jquery'
 import {NavDropdown} from "react-bootstrap"
 import {Link} from "react-router-dom";
-import DbService from "../../_services/DbService";
+import DbService, {TABLE_CATEGORIES} from "../../_services/DbService";
 
 const NavItems = () => {
     const logout = () => {
@@ -29,7 +29,11 @@ const NavItems = () => {
     )
 }
 
-class Header extends React.Component{
+class Header extends React.Component {
+    constructor(props) {
+        super(props)
+        this.categories = DbService.getAllByTable(TABLE_CATEGORIES)
+    }
 
     componentDidMount() {
         $('.search-box').hover(function () {
@@ -77,6 +81,16 @@ class Header extends React.Component{
                             </li>
                             <li className="nav-item dropdown">
                                 <NavDropdown title="Categories" id="basic-nav-dropdown">
+                                    {/*{*/}
+                                    {/*    this.categories ?*/}
+                                    {/*        (this.categories).map(c => {*/}
+                                    {/*            return (*/}
+                                    {/*                <NavDropdown.Item href="#">{c.category}</NavDropdown.Item>*/}
+                                    {/*            )*/}
+                                    {/*        })*/}
+                                    {/*        :*/}
+                                    {/*        ''*/}
+                                    {/*}*/}
                                     <NavDropdown.Item href="#">Mobile Dev</NavDropdown.Item>
                                     <NavDropdown.Item href="#">Backend</NavDropdown.Item>
                                     <NavDropdown.Item href="#">Frontend</NavDropdown.Item>
@@ -106,7 +120,7 @@ class Header extends React.Component{
                                 </NavDropdown>
                             </li>
                         </ul>
-                        <form action="#" method="get" className="align-items-center m-0">
+                        <form className="align-items-center m-0">
                             <div className="search-box--end">
                                 <div className="search-box">
                                     <div className="search-box--inner">

@@ -36,13 +36,13 @@ const Login = () => {
                         <div className="p-3 shadow w-100">
                             <h2 className="text-center">Login</h2>
                             {/* if param.error */}
-                            <div>
-                                Invalid username or password.
-                            </div>
+                            {/*<div>*/}
+                            {/*    Invalid username or password.*/}
+                            {/*</div>*/}
                             {/* if param.logout */}
-                            <div>
-                                You have been logged out.
-                            </div>
+                            {/*<div>*/}
+                            {/*    You have been logged out.*/}
+                            {/*</div>*/}
                             <Form onSubmit={onSubmitForm}>
                                 <div className="form-group">
                                     <label htmlFor="login">Enter login: </label>

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.newsportal.config.Consts;
 import spring.newsportal.config.jwt.JwtTokenGenerator;
+import spring.newsportal.controllers.requests.ProjectRequest;
 import spring.newsportal.entities.models.CategoryEntity;
 import spring.newsportal.entities.models.ProjectEntity;
 import spring.newsportal.entities.models.Users;
@@ -13,6 +14,8 @@ import spring.newsportal.services.CategoryService;
 import spring.newsportal.services.ProjectService;
 import spring.newsportal.services.UserService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,30 +44,35 @@ public class CrudController {
         String login = jwtTokenGenerator.getEmailFromToken(token);
         Users user = userService.getUserByUsername(login);
 
-        System.out.println("here");
-        System.out.println(id);
-
-        CategoryEntity category = categoryService.getCategoryById(Long.valueOf(id));
+        CategoryEntity category = categoryService.getCategoryById(Long.parseLong(id));
         categoryService.delete(category);
         return ResponseEntity.ok(HttpEntity.EMPTY);
     }
 
     @PostMapping(value = "/{token}/" + Consts.ADD + "/" + Consts.TABLE_PROJECTS)
-    public ResponseEntity<?> addProject(@PathVariable String token, @RequestBody String name) {
+    public ResponseEntity<?> addProject(@PathVariable String token, @RequestBody ProjectRequest request) {
         String login = jwtTokenGenerator.getEmailFromToken(token);
         Users user = userService.getUserByUsername(login);
 
-        System.out.println(name);
         ProjectEntity project = new ProjectEntity();
-        project.setTitle(name);
+        project.setTitle(request.getTitle());
+        project.setImgPath(request.getImg());
+        project.setShortDescription(request.getShortDescription());
+        project.setBody(request.getBody());
+
+        CategoryEntity category = categoryService.getCategoryById(request.getCategoryId());
+        List<CategoryEntity> cats = new ArrayList<>();
+        cats.add(category);
+        project.setCategory(cats);
+
         return ResponseEntity.ok(projectService.add(project));
     }
     @DeleteMapping(value = "/{token}/" + Consts.DELETE + "/" + Consts.TABLE_PROJECTS)
-    public ResponseEntity<?> deleteProject(@PathVariable String token, @RequestBody Long id) {
+    public ResponseEntity<?> deleteProject(@PathVariable String token, @RequestBody String id) {
         String login = jwtTokenGenerator.getEmailFromToken(token);
         Users user = userService.getUserByUsername(login);
 
-        Optional<ProjectEntity> project = projectService.getProjectById(id);
+        Optional<ProjectEntity> project = projectService.getProjectById(Long.parseLong(id));
         if (project.isPresent()) {
             ProjectEntity proj = project.get();
             projectService.delete(proj);

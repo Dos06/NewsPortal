@@ -14,7 +14,7 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
+//    @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt = java.sql.Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());

@@ -15,10 +15,10 @@ public class ProjectEntity extends BaseEntity {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "short_description", length = 2048)
+    @Column(name = "short_description", columnDefinition = "TEXT")
     private String shortDescription;
 
-    @Column(name = "img_path", length = 1024)
+    @Column(name = "img_path", columnDefinition = "TEXT")
     private String imgPath;
 
     @Column(name = "body", columnDefinition = "TEXT")

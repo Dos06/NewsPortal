@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 @Transactional
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
+    List<ProjectEntity> findAllByOrderByCreatedAtDesc();
+
     @Query("SELECT DISTINCT proj FROM projects proj left join proj.programmers left join proj.category " +
             "WHERE proj.status.status = 'Done' AND proj.deletedAt IS NULL " +
             "ORDER BY proj.createdAt DESC")

@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 const Footer = () => {
     return (
         <footer>
@@ -6,13 +8,13 @@ const Footer = () => {
                 <div className="row p-0">
                     <div className="col-12 p-0 m-0">
                         <div className="tags-box text-center w-100 p-3">
-                            <a href={'#'} className="tag">HTML</a>
-                            <a href={'#'} className="tag">CSS</a>
-                            <a href={'#'} className="tag">JavaScript</a>
-                            <a href={'#'} className="tag">Java</a>
-                            <a href={'#'} className="tag">Spring</a>
-                            <a href={'#'} className="tag">Dart</a>
-                            <a href={'#'} className="tag">SQL</a>
+                            <Link to={'/'} className="tag">HTML</Link>
+                            <Link to={'/'} className="tag">CSS</Link>
+                            <Link to={'/'} className="tag">JavaScript</Link>
+                            <Link to={'/'} className="tag">Java</Link>
+                            <Link to={'/'} className="tag">Spring</Link>
+                            <Link to={'/'} className="tag">Dart</Link>
+                            <Link to={'/'} className="tag">SQL</Link>
                         </div>
                     </div>
                 </div>

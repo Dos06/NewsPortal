@@ -5,6 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import spring.newsportal.entities.models.CategoryEntity;
 import spring.newsportal.entities.models.ProjectEntity;
@@ -15,6 +16,7 @@ import spring.newsportal.services.UserService;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -42,5 +44,13 @@ public class MainController {
     public ResponseEntity<?> getProjects() {
         List<ProjectEntity> projects = projectService.getAllProjects();
         return ResponseEntity.ok(Objects.requireNonNullElse(projects, HttpEntity.EMPTY));
+    }
+    @GetMapping(value = "/projects/{id}")
+    public ResponseEntity<?> getProjectById(@PathVariable Long id) {
+        Optional<ProjectEntity> project = projectService.getProjectById(id);
+        if (project.isPresent()) {
+            return ResponseEntity.ok(project.get());
+        }
+        return ResponseEntity.ok(HttpEntity.EMPTY);
     }
 }

@@ -136,7 +136,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectEntity> getAllProjects() {
-        return projectRepository.findAll();
+        return projectRepository.findAllByOrderByCreatedAtDesc();
     }
 
     @Override

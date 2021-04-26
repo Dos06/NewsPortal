@@ -16,9 +16,9 @@ export default function CategoryTable(props) {
             sortable: true,
         },
         {
+            right: true,
             cell: (row) => <Button variant={'danger'} onClick={() => {
                 deleteItem(row.id)
-                    .then(_ => loadData())
             }}>DELETE</Button>
         }
     ]
