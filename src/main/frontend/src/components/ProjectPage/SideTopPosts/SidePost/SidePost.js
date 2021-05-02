@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
 
-export default function SidePost() {
+export default function SidePost(props) {
+    const project = props.project
+
     return (
         <div className="popular-row">
             <div className="col-12">
@@ -8,8 +10,8 @@ export default function SidePost() {
                     <p>
                         Analytics, Mobile Dev, Backend, Frontend
                     </p>
-                    <Link to={"/project/1"}>
-                        <h5>Lorem ipsum dolor sit amet, consectetur</h5>
+                    <Link to={`/project/${project.id}`}>
+                        <h5>{!project ? '' : project.title}</h5>
                     </Link>
                 </div>
             </div>

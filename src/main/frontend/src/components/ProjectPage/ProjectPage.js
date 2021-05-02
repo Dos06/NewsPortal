@@ -8,17 +8,23 @@ import Comments from "./Comments/Comments";
 
 export default function ProjectPage(props) {
     const [project, setProject] = useState({})
+    const [posts, setPosts] = useState([])
     let date = new Date(project.createdAt)
 
     const loadData = () => {
-        DbService.getItemByIdAndTable(props.id, TABLE_PROJECTS).then( response => {
-            setProject(response.data);
-        })
+        DbService.getItemByIdAndTable(props.id, TABLE_PROJECTS)
+            .then(response => {
+                setProject(response.data);
+            })
+        DbService.getAllByTable(TABLE_PROJECTS)
+            .then(response => {
+                setPosts(response.data)
+            })
     }
 
-    useEffect( () => {
+    useEffect(() => {
         loadData();
-    }, [] )
+    }, [])
 
     return (
         <div className="container">
@@ -78,7 +84,7 @@ export default function ProjectPage(props) {
                     <Categories categories={project.category}/>
                     <Technologies/>
                     <Authors/>
-                    <SideTopPosts/>
+                    <SideTopPosts projects={posts}/>
                 </div>
             </div>
         </div>

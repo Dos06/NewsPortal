@@ -1,6 +1,8 @@
 import SidePost from "./SidePost/SidePost";
 
-export default function SideTopPosts() {
+export default function SideTopPosts(props) {
+    const projects = props.projects
+
     return (
         <div className="sidebar bg-white">
             <div className="sidebar-title mb-0">
@@ -10,11 +12,16 @@ export default function SideTopPosts() {
             </div>
             <div className="sidebar-block bg-white border pt-3 pb-2">
                 <div className="popular-posts">
-                    <SidePost/>
-                    <hr/>
-                    <SidePost/>
-                    <hr/>
-                    <SidePost/>
+                    {
+                        projects.map(p => {
+                            return (
+                                <>
+                                    <SidePost project={p}/>
+                                    <hr/>
+                                </>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>
