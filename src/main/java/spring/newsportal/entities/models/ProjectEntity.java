@@ -1,15 +1,22 @@
 package spring.newsportal.entities.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import spring.newsportal.entities.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.stereotype.Indexed;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "projects")
 @Indexed
+@Data
+@AllArgsConstructor
 public class ProjectEntity extends BaseEntity {
 
     @Column(name = "title")
@@ -64,6 +71,8 @@ public class ProjectEntity extends BaseEntity {
 //    @JsonBackReference
     private List<TechnologyEntity> technologies;
 
+    @OneToMany(targetEntity = CommentEntity.class)
+    private List<CommentEntity> comments = new ArrayList<>();
 
     public ProjectEntity() {
     }

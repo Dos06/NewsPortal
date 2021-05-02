@@ -10,6 +10,7 @@ export const TABLE_USERS = 'users';
 export const TABLE_CATEGORIES = 'categories';
 export const TABLE_PROJECTS = 'projects';
 export const TABLE_PROGRAMMERS = 'programmers';
+export const TABLE_COMMENTS = 'comments';
 
 class DbService {
     async login(username, password) {

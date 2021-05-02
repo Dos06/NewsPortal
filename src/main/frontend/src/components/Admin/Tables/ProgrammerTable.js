@@ -58,7 +58,6 @@ export default function ProgrammerTable(props) {
 
     const loadData = () => {
         DbService.getAllByTable(TABLE_PROGRAMMERS).then(response => {
-            console.log(response.data)
             setData((response.data).map(item => {
                 return {
                     id: item.id,

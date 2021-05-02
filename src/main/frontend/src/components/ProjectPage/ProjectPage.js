@@ -4,11 +4,11 @@ import Technologies from "./Technologies/Technologies";
 import Categories from "./Categories/Categories";
 import {useEffect, useState} from "react";
 import DbService, {TABLE_PROJECTS} from "../../_services/DbService";
+import Comments from "./Comments/Comments";
 
 export default function ProjectPage(props) {
     const [project, setProject] = useState({})
     let date = new Date(project.createdAt)
-    // const categories = props.categories
 
     const loadData = () => {
         DbService.getItemByIdAndTable(props.id, TABLE_PROJECTS).then( response => {
@@ -67,9 +67,11 @@ export default function ProjectPage(props) {
                     {/*    <i className="far fa-eye ml-1"/> 45*/}
                     {/*</span>*/}
 
-                    <div className="mt-5">
+                    {/*<div className="mt-5">*/}
                         {/*footer*/}
-                    </div>
+                    {/*</div>*/}
+
+                    <Comments loadData={loadData} comments={project.comments} project={project}/>
                 </div>
 
                 <div className="col-12 col-lg-4">

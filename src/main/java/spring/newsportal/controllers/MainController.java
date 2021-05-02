@@ -8,15 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import spring.newsportal.config.Consts;
-import spring.newsportal.entities.models.CategoryEntity;
-import spring.newsportal.entities.models.ProgrammerEntity;
-import spring.newsportal.entities.models.ProjectEntity;
-import spring.newsportal.entities.models.Users;
+import spring.newsportal.entities.models.*;
 import spring.newsportal.services.CategoryService;
 import spring.newsportal.services.ProgrammerService;
 import spring.newsportal.services.ProjectService;
 import spring.newsportal.services.UserService;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -65,6 +63,9 @@ public class MainController {
     public ResponseEntity<?> getProjectById(@PathVariable Long id) {
         Optional<ProjectEntity> project = projectService.getProjectById(id);
         if (project.isPresent()) {
+            List<CommentEntity> comments = project.get().getComments();
+            comments.sort(Comparator.comparing(CommentEntity::getCreatedAt).reversed());
+            project.get().setComments(comments);
             return ResponseEntity.ok(project.get());
         }
         return ResponseEntity.ok(HttpEntity.EMPTY);

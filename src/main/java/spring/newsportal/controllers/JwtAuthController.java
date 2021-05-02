@@ -43,7 +43,6 @@ public class JwtAuthController {
 
     @RequestMapping(value = "/auth")
     public ResponseEntity<?> auth(@RequestBody JwtRequest request) throws Exception {
-        System.out.println(request);
         authenticate(request.getUsername(), request.getPassword());
         final UserDetails userDetails = userService.loadUserByUsername(request.getUsername());
         final String token = jwtTokenGenerator.generateToken(userDetails);
@@ -65,8 +64,6 @@ public class JwtAuthController {
     @PostMapping(value = "/auth/register")
     @PreAuthorize("isAnonymous()")
     public ResponseEntity<?> signUp(@RequestBody JwtRequest newUser) {
-        System.out.println(newUser.getUsername());
-        System.out.println(newUser);
         Users user = userService.getUserByUsername(newUser.getUsername());
         if (user == null) {
             List<Role> roles = new ArrayList<>(1);
