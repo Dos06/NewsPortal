@@ -26,7 +26,6 @@ function App() {
                     <>
                         <Header/>
                         <Switch>
-                            {/*<Route path='/profile' render={() => <Profile/>}/>*/}
                             <Route path='/register' render={() => <Register/>}/>
                             <Route path='/login' render={() => <Login/>}/>
                             <Route path={'/programmer/:id'} children={<ProgrammerChild/>}/>
@@ -44,14 +43,14 @@ function App() {
 function ProgrammerChild() {
     let {id} = useParams();
     return (
-        <ProgrammerPage id={id}/>
+        <ProgrammerPage id={id} key={window.location.pathname}/>
     );
 }
 
 function ProjectChild() {
     let {id} = useParams();
     return (
-        <ProjectPage id={id}/>
+        <ProjectPage id={id} key={window.location.pathname}/>
     );
 }
 
