@@ -13,14 +13,18 @@ export default function SideTopPosts(props) {
             <div className="sidebar-block bg-white border pt-3 pb-2">
                 <div className="popular-posts">
                     {
-                        projects.map(p => {
-                            return (
-                                <>
-                                    <SidePost project={p}/>
-                                    <hr/>
-                                </>
-                            )
-                        })
+                        projects
+                            .filter(p => {
+                                return (p.id !== props.projectId)
+                            })
+                            .map(p => {
+                                return (
+                                    <>
+                                        <SidePost project={p}/>
+                                        <hr/>
+                                    </>
+                                )
+                            })
                     }
                 </div>
             </div>

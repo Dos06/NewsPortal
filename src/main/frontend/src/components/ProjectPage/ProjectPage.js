@@ -84,7 +84,7 @@ export default function ProjectPage(props) {
                     <Categories categories={project.category}/>
                     <Technologies/>
                     <Authors/>
-                    <SideTopPosts projects={posts}/>
+                    <SideTopPosts projectId={project.id} projects={posts}/>
                 </div>
             </div>
         </div>
