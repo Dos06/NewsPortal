@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import spring.newsportal.config.Consts;
 import spring.newsportal.entities.models.*;
-import spring.newsportal.services.CategoryService;
-import spring.newsportal.services.ProgrammerService;
-import spring.newsportal.services.ProjectService;
-import spring.newsportal.services.UserService;
+import spring.newsportal.services.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -30,6 +27,8 @@ public class MainController {
     private ProjectService projectService;
     @Autowired
     private ProgrammerService programmerService;
+    @Autowired
+    private TechnologyService technologyService;
 
     @GetMapping(value = "/" + Consts.TABLE_USERS)
     public ResponseEntity<?> getUsers() {
@@ -41,6 +40,12 @@ public class MainController {
     public ResponseEntity<?> getCategories() {
         List<CategoryEntity> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(Objects.requireNonNullElse(categories, HttpEntity.EMPTY));
+    }
+
+    @GetMapping(value = "/" + Consts.TABLE_TECHNOLOGIES)
+    public ResponseEntity<?> getTechnologies() {
+        List<TechnologyEntity> technologies = technologyService.getAllTechnologies();
+        return ResponseEntity.ok(Objects.requireNonNullElse(technologies, HttpEntity.EMPTY));
     }
 
     @GetMapping(value = "/" + Consts.TABLE_PROGRAMMERS)

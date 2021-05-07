@@ -10,4 +10,5 @@ public class Consts {
     public final static String TABLE_PROJECTS = "projects";
     public final static String TABLE_PROGRAMMERS = "programmers";
     public final static String TABLE_COMMENTS = "comments";
+    public final static String TABLE_TECHNOLOGIES = "technologies";
 }

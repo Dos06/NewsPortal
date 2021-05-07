@@ -9,6 +9,7 @@ import spring.newsportal.config.jwt.JwtTokenGenerator;
 import spring.newsportal.controllers.requests.CommentRequest;
 import spring.newsportal.controllers.requests.ProgrammerRequest;
 import spring.newsportal.controllers.requests.ProjectRequest;
+import spring.newsportal.controllers.requests.TechRequest;
 import spring.newsportal.entities.models.*;
 import spring.newsportal.services.*;
 
@@ -31,6 +32,8 @@ public class CrudController {
     private ProgrammerService programmerService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private TechnologyService technologyService;
 
     @PostMapping(value = "/{token}/" + Consts.ADD + "/" + Consts.TABLE_CATEGORIES)
     public ResponseEntity<?> addCategory(@PathVariable String token, @RequestBody String name) {
@@ -48,6 +51,26 @@ public class CrudController {
 
         CategoryEntity category = categoryService.getCategoryById(Long.parseLong(id));
         categoryService.delete(category);
+        return ResponseEntity.ok(HttpEntity.EMPTY);
+    }
+
+    @PostMapping(value = "/{token}/" + Consts.ADD + "/" + Consts.TABLE_TECHNOLOGIES)
+    public ResponseEntity<?> addTech(@PathVariable String token, @RequestBody TechRequest request) {
+        String login = jwtTokenGenerator.getEmailFromToken(token);
+        Users user = userService.getUserByUsername(login);
+
+        TechnologyEntity technology = new TechnologyEntity();
+        technology.setTechnology(request.getName());
+        technology.setIcon(request.getImg());
+        return ResponseEntity.ok(technologyService.add(technology));
+    }
+    @DeleteMapping(value = "/{token}/" + Consts.DELETE + "/" + Consts.TABLE_TECHNOLOGIES)
+    public ResponseEntity<?> deleteTech(@PathVariable String token, @RequestBody String id) {
+        String login = jwtTokenGenerator.getEmailFromToken(token);
+        Users user = userService.getUserByUsername(login);
+
+        TechnologyEntity technology = technologyService.getTechnologyById(Long.parseLong(id));
+        technologyService.delete(technology);
         return ResponseEntity.ok(HttpEntity.EMPTY);
     }
 
