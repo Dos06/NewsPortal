@@ -2,8 +2,12 @@ import DataTable from "react-data-table-component";
 import {Button, Form, Modal} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
 import DbService, {ADD, DELETE, TABLE_CATEGORIES, TABLE_PROJECTS} from "../../../_services/DbService";
+import Select from "react-select";
 
 export default function ProjectTable(props) {
+    const [optionCategories, setOptCats] = useState([])
+    const [categs, setCategs] = useState([])
+
     const columns = [
         {
             name: 'ID',
@@ -39,7 +43,6 @@ export default function ProjectTable(props) {
     const [img, setImg] = useState('');
     const [shortDesc, setShortDesc] = useState('');
     const [body, setBody] = useState('');
-    const [categoryId, setCategoryId] = useState(0);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -63,6 +66,12 @@ export default function ProjectTable(props) {
                     name: item.category,
                 }
             }))
+            setOptCats((response.data).map(item => {
+                return {
+                    value: item.id,
+                    label: item.category,
+                }
+            }))
         })
     }
 
@@ -76,9 +85,6 @@ export default function ProjectTable(props) {
     const onChangeImg = event => {
         setImg(event.target.value);
     }
-    const onChangeCategoryId = event => {
-        setCategoryId(event.target.value);
-    }
     const onChangeShortDesc = event => {
         setShortDesc(event.target.value);
     }
@@ -86,14 +92,17 @@ export default function ProjectTable(props) {
         setBody(event.target.value);
     }
     const onSubmitForm = event => {
-        const data = {title, img, shortDesc, body, categoryId}
+        let cats = []
+        for (let i = 0; i < categs.length; i++) {
+            cats.push(categs[i].value)
+        }
+        const data = {title, img, shortDesc, body, cats}
         addItem(data)
             .then(_ => {
                 setTitle('')
                 setImg('')
                 setShortDesc('')
                 setBody('')
-                setCategoryId(0)
             })
             .catch(e => console.log(e))
         event.preventDefault()
@@ -133,6 +142,10 @@ export default function ProjectTable(props) {
                             />
                         </Form.Group>
                         <Form.Group>
+                            <Form.Label>Category:</Form.Label>
+                            <Select options={optionCategories} onChange={setCategs} isMulti autoFocus/>
+                        </Form.Group>
+                        <Form.Group>
                             <Form.Label>Image URL:</Form.Label>
                             <Form.Control
                                 value={img}
@@ -141,25 +154,6 @@ export default function ProjectTable(props) {
                                 placeholder="Enter image URL"
                                 required
                             />
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Category:</Form.Label>
-                            <Form.Control
-                                as={'select'}
-                                size={'sm'}
-                                value={categoryId}
-                                onChange={onChangeCategoryId}
-                                placeholder="Choose category"
-                                required
-                            >
-                                {categories.map(c => {
-                                    return (
-                                        <option key={c.id} value={c.id}>
-                                            {c.name}
-                                        </option>
-                                    )
-                                })}
-                            </Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Short description:</Form.Label>

@@ -16,15 +16,6 @@ export default function Categories(props) {
                                 </li>
                             )
                         })}
-                        <li className="col-lg-6">
-                            <Link to={'/'}>Analytics</Link>
-                        </li>
-                        <li className="col-lg-6">
-                            <Link to={'/'}>Web</Link>
-                        </li>
-                        <li className="col-lg-6">
-                            <Link to={'/'}>Mobile Dev</Link>
-                        </li>
                     </ul>
                 </div>
             </div>

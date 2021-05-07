@@ -85,9 +85,10 @@ public class CrudController {
         project.setShortDescription(request.getShortDescription());
         project.setBody(request.getBody());
 
-        CategoryEntity category = categoryService.getCategoryById(request.getCategoryId());
         List<CategoryEntity> cats = new ArrayList<>();
-        cats.add(category);
+        for (Long id : request.getCats()) {
+            cats.add(categoryService.getCategoryById(id));
+        }
         project.setCategory(cats);
 
         return ResponseEntity.ok(projectService.add(project));
