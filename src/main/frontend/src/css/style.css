@@ -968,9 +968,8 @@ footer .tags-box .tag:hover {
 
 
 .card-author {
-
     display: grid;
-    grid-template-columns: 75px 1fr;
+    grid-template-columns: 50px 1fr;
     align-items: center;
     position: relative;
 }
@@ -989,12 +988,12 @@ footer .tags-box .tag:hover {
     /*filter: grayscale(100%);*/
     display: block;
     overflow: hidden;
-    margin: 16px 10px;
 }
 
 .author-name {
     grid-area: auto;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .author-name-prefix {

@@ -4,8 +4,17 @@ export default function Technologies() {
             <h5 className="card-header">Technologies</h5>
             <div className="card-body">
                 <div className="row">
-                    <img className="tech-icon" src="https://upload.wikimedia.org/wikipedia/ru/thumb/3/39/Java_logo.svg/1200px-Java_logo.svg.png" alt="img"/>
-                    <img className="tech-icon" src="https://miro.medium.com/max/500/1*cPh7ujRIfcHAy4kW2ADGOw.png" alt="img"/>
+                    <ul className="list-unstyled mb-0 d-flex flex-wrap">
+                        <li className="col-lg-3 my-2">
+                            <img className="tech-icon" src="https://spring-petclinic.github.io/images/logo-spring.png" alt="img"/>
+                        </li>
+                        <li className="col-lg-3 my-2">
+                            <img className="tech-icon" src="https://miro.medium.com/max/500/1*cPh7ujRIfcHAy4kW2ADGOw.png" alt="img"/>
+                        </li>
+                        <li className="col-lg-3 my-2">
+                            <img className="tech-icon" src="http://assets.stickpng.com/images/5848309bcef1014c0b5e4a9a.png" alt="img"/>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
