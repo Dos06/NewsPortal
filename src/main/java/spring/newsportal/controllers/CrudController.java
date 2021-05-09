@@ -86,10 +86,20 @@ public class CrudController {
         project.setBody(request.getBody());
 
         List<CategoryEntity> cats = new ArrayList<>();
-        for (Long id : request.getCats()) {
+        List<ProgrammerEntity> progs = new ArrayList<>();
+        List<TechnologyEntity> techs = new ArrayList<>();
+        for (Long id : request.getCategoryIds()) {
             cats.add(categoryService.getCategoryById(id));
         }
+        for (Long id : request.getProgrammerIds()) {
+            progs.add(programmerService.getProgrammerById(id));
+        }
+        for (Long id : request.getTechnologyIds()) {
+            techs.add(technologyService.getTechnologyById(id));
+        }
         project.setCategory(cats);
+        project.setProgrammers(progs);
+        project.setTechnologies(techs);
 
         return ResponseEntity.ok(projectService.add(project));
     }

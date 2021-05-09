@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class ProjectRequest {
     private String title, img, shortDescription, body;
-    private List<Long> cats;
+    private List<Long> categoryIds, programmerIds, technologyIds;
 }

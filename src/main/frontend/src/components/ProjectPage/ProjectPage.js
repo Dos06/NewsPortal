@@ -82,7 +82,7 @@ export default function ProjectPage(props) {
 
                 <div className="col-12 col-lg-4">
                     <Categories categories={project.category}/>
-                    <Technologies/>
+                    <Technologies technologies={project.technologies}/>
                     <Authors/>
                     <SideTopPosts projectId={project.id} projects={posts}/>
                 </div>

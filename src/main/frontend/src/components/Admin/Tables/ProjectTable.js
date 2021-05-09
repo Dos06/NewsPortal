@@ -1,12 +1,22 @@
 import DataTable from "react-data-table-component";
 import {Button, Form, Modal} from "react-bootstrap";
 import React, {useEffect, useState} from "react";
-import DbService, {ADD, DELETE, TABLE_CATEGORIES, TABLE_PROJECTS} from "../../../_services/DbService";
+import DbService, {
+    ADD,
+    DELETE,
+    TABLE_CATEGORIES,
+    TABLE_PROGRAMMERS,
+    TABLE_PROJECTS, TABLE_TECHNOLOGIES
+} from "../../../_services/DbService";
 import Select from "react-select";
 
 export default function ProjectTable(props) {
     const [optionCategories, setOptCats] = useState([])
     const [categs, setCategs] = useState([])
+    const [optionProgrammers, setOptProgs] = useState([])
+    const [progs, setProgs] = useState([])
+    const [optionTechnologies, setOptTechs] = useState([])
+    const [techs, setTechs] = useState([])
 
     const columns = [
         {
@@ -49,6 +59,8 @@ export default function ProjectTable(props) {
 
     const [data, setData] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [programmers, setProgrammers] = useState([]);
+    const [technologies, setTechnologies] = useState([]);
 
     const loadData = () => {
         DbService.getAllByTable(TABLE_PROJECTS).then(response => {
@@ -73,6 +85,35 @@ export default function ProjectTable(props) {
                 }
             }))
         })
+        DbService.getAllByTable(TABLE_PROGRAMMERS).then(response => {
+            setProgrammers((response.data).map(item => {
+                return {
+                    id: item.id,
+                    name: item.name + ' ' + item.last_name,
+                }
+            }))
+            setOptProgs((response.data).map(item => {
+                return {
+                    value: item.id,
+                    label: item.name + ' ' + item.last_name,
+                }
+            }))
+        })
+        DbService.getAllByTable(TABLE_TECHNOLOGIES).then(response => {
+            console.log(response.data)
+            setTechnologies((response.data).map(item => {
+                return {
+                    id: item.id,
+                    name: item.technology,
+                }
+            }))
+            setOptTechs((response.data).map(item => {
+                return {
+                    value: item.id,
+                    label: item.technology,
+                }
+            }))
+        })
     }
 
     useEffect(() => {
@@ -92,11 +133,19 @@ export default function ProjectTable(props) {
         setBody(event.target.value);
     }
     const onSubmitForm = event => {
-        let cats = []
+        let categoryIds = []
+        let programmerIds = []
+        let technologyIds = []
         for (let i = 0; i < categs.length; i++) {
-            cats.push(categs[i].value)
+            categoryIds.push(categs[i].value)
         }
-        const data = {title, img, shortDesc, body, cats}
+        for (let i = 0; i < progs.length; i++) {
+            programmerIds.push(progs[i].value)
+        }
+        for (let i = 0; i < techs.length; i++) {
+            technologyIds.push(techs[i].value)
+        }
+        const data = {title, img, shortDesc, body, categoryIds, programmerIds, technologyIds}
         addItem(data)
             .then(_ => {
                 setTitle('')
@@ -146,6 +195,14 @@ export default function ProjectTable(props) {
                             <Select options={optionCategories} onChange={setCategs} isMulti autoFocus/>
                         </Form.Group>
                         <Form.Group>
+                            <Form.Label>Authors:</Form.Label>
+                            <Select options={optionProgrammers} onChange={setProgs} isMulti/>
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Technologies:</Form.Label>
+                            <Select options={optionTechnologies} onChange={setTechs} isMulti/>
+                        </Form.Group>
+                        <Form.Group>
                             <Form.Label>Image URL:</Form.Label>
                             <Form.Control
                                 value={img}
@@ -159,7 +216,7 @@ export default function ProjectTable(props) {
                             <Form.Label>Short description:</Form.Label>
                             <Form.Control
                                 as={'textarea'}
-                                rows={3}
+                                rows={2}
                                 value={shortDesc}
                                 onChange={onChangeShortDesc}
                                 type="text"
@@ -171,7 +228,7 @@ export default function ProjectTable(props) {
                             <Form.Label>Content:</Form.Label>
                             <Form.Control
                                 as={'textarea'}
-                                rows={10}
+                                rows={5}
                                 value={body}
                                 onChange={onChangeBody}
                                 type="text"

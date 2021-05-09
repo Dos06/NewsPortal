@@ -8,15 +8,11 @@ export default function Categories(props) {
             <h5 className="card-header">Categories</h5>
             <div className="card-body">
                 <div className="row">
-                    <ul className="list-unstyled mb-0 d-flex flex-wrap">
-                        {!categories ? '' : categories.map(c => {
-                            return (
-                                <li key={`c${c.id}`} className={'col-lg-6'}>
-                                    <Link to={'/'}>{c.category}</Link>
-                                </li>
-                            )
-                        })}
-                    </ul>
+                    {!categories ? '' : categories.map(c => {
+                        return (
+                            <Link key={`c${c.id}`} to={`/?category=${c.id}`} className={'col-4'}>{c.category}</Link>
+                        )
+                    })}
                 </div>
             </div>
         </div>

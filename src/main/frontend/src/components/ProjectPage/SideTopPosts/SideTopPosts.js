@@ -17,6 +17,7 @@ export default function SideTopPosts(props) {
                             .filter(p => {
                                 return (p.id !== props.projectId)
                             })
+                            .slice(0, 3)
                             .map(p => {
                                 return (
                                     <>
